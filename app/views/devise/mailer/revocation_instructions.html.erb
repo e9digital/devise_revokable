@@ -1,0 +1,7 @@
+<p>Hello <%= @resource.email %>!</p>
+
+<p>You (or someone pretending to be you) has created an account at <%= root_url %>.</p>
+
+<p>If you chose to sign up with us, please disregard this email!</p>
+
+<p>However if this is not you, <%= link_to 'click here', confirm_revocation_url(@resource, :revocation_token => @resource.revocation_token) %> to take action.</p>

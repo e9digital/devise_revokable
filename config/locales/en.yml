@@ -1,0 +1,10 @@
+en:
+  devise:
+    revocations:
+      updated: 'Your account was reset successfully.'
+      revocation_token_invalid: 'The token provided is not valid, or this account has already been revoked!'
+      revoke_confirmed_header: 'Account Reset Successfully'
+      revoke_confirmed_instructions: "This account has been reset successfully."
+      confirm_revoke_header: 'Are You Sure?'
+      confirm_revoke_instructions: "If you submit this form your account and its credentials will be reset.  Any activity that has taken place on this account will be lost."
+      confirm_revoke_submit: 'Reset this account!'

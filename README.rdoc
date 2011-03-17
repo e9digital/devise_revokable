@@ -1,0 +1,45 @@
+== Devise::Revokable
+
+A module for Devise[http://github.com/plataformatec/devise]
+
+This gem was created by "borrowing" heavily from Devise::Invitable[http://github.com/scambra/devise_invitable]
+
+It exists to extend Devise to provide the basis for what is essentially the reverse of the standard
+<tt>confirmable</tt> module.  Where <tt>confirmable</tt> sends an email and awaits a response, 
+before confirming a new registration, <tt>revokable</tt> allows immediate access and sends an
+email which provides a link to "revoke" the account if it was created fraudulently.
+
+This is useful if you want to lower the barrier to entry to creating accounts, and clearly, if
+account security isn't a concern.
+
+Note that tests are non-existent.  Use freely but at your own risk.
+
+=== Configuring
+
+It works like normal Devise modules.  Add the <tt>:revokable</tt> module to the declaration.
+
+user.rb:
+
+  devise :revokable # plus other devise modules
+
+Additionally, you will need to override <tt>#revoke!</tt> to actually perfom the revocation on your account, which
+is yielded to from the module's method.
+
+user.rb:
+  
+  def revoke!
+    super do
+      self.some_method_that_resets_me!
+    end
+  end
+
+That's about the extent of it.  As with typical devise modules you can override the mailers and views with your own.
+Additionally you can define the module accessor <tt>@@mailer</tt> on the module with a proc to handle your mail if you need to.
+This proc is yielded two arguments, the method name (e.g. :revocation_instructions), and the affected resource.
+
+config/initializers/devise_revocation.rb
+
+  require 'devise_revocation'
+  require 'my_mailer'
+
+  DeviseRevocation.mailer = proc {|method_name, resource| MyMailer.send(:method_name, resource) }

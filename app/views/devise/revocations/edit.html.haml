@@ -1,0 +1,4 @@
+- if resource.errors.any? || !resource.revoked?
+  = render 'confirm_revoke'
+- else
+  = render 'revoke_confirmed'

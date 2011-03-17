@@ -1,0 +1,11 @@
+%h2
+  = t(:confirm_revoke_header, :scope => :"devise.revocations")
+
+= form_for resource, :as => resource_name, :url => revocation_path(resource_class), :html => { :method => :put } do |f|
+  = f.hidden_field :revocation_token
+
+  .instructions
+    = t(:confirm_revoke_instructions, :scope => :"devise.revocations")
+
+  .actions
+    = f.submit t(:confirm_revoke_submit, :scope => :"devise.revocations")
