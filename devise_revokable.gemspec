@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email        = "travis@e9digital.com"
   s.homepage     = "https://github.com/e9digital/devise_revokable"
   s.summary      = "A revocation strategy for Devise"
-  s.description  = ""
+  s.description  = File.open('README.rdoc').read rescue ''
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
