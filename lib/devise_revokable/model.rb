@@ -26,6 +26,14 @@ module Devise
         !!revoked_at
       end
 
+      def active?
+        not revoked?
+      end
+
+      def inactive_message
+        super
+      end
+
       protected
 
         def send_revocation_instructions
@@ -58,19 +66,20 @@ module Devise
 
       module ClassMethods
         def send_revocation_instructions(attributes = {})
+          return unless active?
           revokable = find_or_initialize_with_error_by(:email, attributes[:email], :not_found)
           revokable.send(:send_revocation_instructions) if revokable.persisted?
           revokable
-        end
-
-        def revocation_token
-          generate_token(:revocation_token)
         end
 
         def revoke_by_token(token)
           revokable = find_or_initialize_with_error_by(:revocation_token, token, :revocation_token_invalid)
           revokable.revoke! if revokable.persisted?
           revokable
+        end
+
+        def revocation_token
+          generate_token(:revocation_token)
         end
       end
     end
