@@ -18,15 +18,13 @@ Note that tests are non-existent.  Use freely but at your own risk.
 
 It works like normal Devise modules.  Add the <tt>:revokable</tt> module to the declaration.
 
-user.rb:
-
+  # in user.rb
   devise :revokable # plus other devise modules
 
 Additionally, you will need to override <tt>#revoke!</tt> to actually perfom the revocation on your account, which
 is yielded to from the module's method.
 
-user.rb:
-  
+  # in user.rb
   def revoke!
     super do
       self.some_method_that_resets_me!
@@ -37,8 +35,8 @@ That's about the extent of it.  As with typical devise modules you can override 
 Additionally you can define the module accessor <tt>@@mailer</tt> on the module with a proc to handle your mail if you need to.
 This proc is yielded two arguments, the method name (e.g. :revocation_instructions), and the affected resource.
 
-config/initializers/devise_revocation.rb
 
+  # in config/initializers/devise_revocation.rb
   require 'devise_revocation'
   require 'my_mailer'
 
