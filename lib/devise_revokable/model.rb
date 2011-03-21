@@ -66,7 +66,6 @@ module Devise
 
       module ClassMethods
         def send_revocation_instructions(attributes = {})
-          return unless active?
           revokable = find_or_initialize_with_error_by(:email, attributes[:email], :not_found)
           revokable.send(:send_revocation_instructions) if revokable.persisted?
           revokable
