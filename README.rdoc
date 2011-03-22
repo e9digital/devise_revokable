@@ -21,8 +21,11 @@ It works like normal Devise modules.  Add the <tt>:revokable</tt> module to the 
   # in user.rb
   devise :revokable # plus other devise modules
 
-Additionally, you will need to override <tt>#revoke!</tt> to actually perfom the revocation on your account, which
-is yielded to from the module's method.
+If the user who received the revocation email follows the provided link and confirms revocation, the account will
+effectively be "revoked" and inactive, unable to log in.
+
+Additionally, you may want to override <tt>#revoke!</tt> to perfom additional revocation on the account, e.g. deleting
+posts made, resetting personal information, etc.  The super method yields to a block for this purpose.
 
   # in user.rb
   def revoke!
@@ -36,8 +39,8 @@ Additionally you can define the module accessor <tt>@@mailer</tt> on the module 
 This proc is yielded two arguments, the method name (e.g. :revocation_instructions), and the affected resource.
 
 
-  # in config/initializers/devise_revocation.rb
-  require 'devise_revocation'
+  # in config/initializers/devise_revokable.rb
+  require 'devise_revokable'
   require 'my_mailer'
 
-  DeviseRevocation.mailer = proc {|method_name, resource| MyMailer.send(:method_name, resource) }
+  DeviseRevokable.mailer = proc {|method_name, resource| MyMailer.send(:method_name, resource) }
