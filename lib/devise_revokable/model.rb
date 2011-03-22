@@ -27,11 +27,11 @@ module Devise
       end
 
       def active?
-        not revoked?
+        super && !revoked?
       end
 
       def inactive_message
-        super
+        revoked? ? :revoked : super
       end
 
       protected
